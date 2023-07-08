@@ -1,0 +1,38 @@
+service: mac-serverless-s3local
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+plugins:
+  - serverless-s3-local
+  - serverless-offline
+
+custom:
+  s3:
+    host: localhost
+    port: 8080
+    directory: s3-files
+  serverless-offline:
+    noPrependStageInUrl: true
+	
+functions:
+  webhook:
+    handler: index.handler
+    events:
+      - http:
+          path: /
+          method: get
+  s3hook:
+    handler: index.s3hook
+    events:
+      - s3: local-bucket
+        event: s3:*
+ 
+resources:
+  Resources:
+    NewResource:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: local-bucket
