@@ -13,7 +13,7 @@
   aws_secret_access_key = S3RVER
   ```
 
-2. Trigger lambda
+2. Trigger lambda by copy file from `data\email-message.txt` to S3 bucket
 
   ```
   aws --endpoint http://localhost:8080 s3 cp data\email-message.txt s3://local-bucket/email-message.csv --profile s3local
